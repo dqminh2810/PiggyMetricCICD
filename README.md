@@ -9,14 +9,16 @@
 ## Jenkins & Github
 **Github webhook --notify changes--> Jenkins --pull code--> Github**
 
-*Jenkins --send build status for commit--> Github*
+**Jenkins --send build status for commit--> Github**
 
 ### Setup SSH key for Github-Jenkins-agent
 **Jenkins Agent (ssh client - private key) --- Github (ssh server - public key)**
 
 ### Setup Github Access Token 
 *GITHUB - Generate a Github access token & select permissions*
+
 *JENKINS - Create credentials & update github server config*
+
 *JENKINS - Setup ngrok to expose jenkins then update jenkins url*
 
 ## Setup Jenkins Shared Library
