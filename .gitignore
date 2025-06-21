@@ -1,2 +1,2 @@
 data/*
-jenkins-agent-1/ssh/*
+jenkins-agent-1/ssh/**
