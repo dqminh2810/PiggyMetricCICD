@@ -1,0 +1,23 @@
+version: '3'
+services:
+    jenkins:
+        image: jenkins/jenkins:lts
+        container_name: jenkins
+        privileged: true
+        user: root
+        ports:
+            - 8080:8080
+            - 50000:50000
+        volumes:
+            - ./data:/var/jenkins_home
+    agent:
+        build: jenkins-agent-1
+        container_name: agent
+        privileged: true
+        user: root
+        ports:
+            - 22:22
+        volumes:
+            - type: bind
+              source: ./jenkins-agent-1/ssh/jenkins-agent.pub
+              target: /home/jenkins/.ssh/authorized_keys
