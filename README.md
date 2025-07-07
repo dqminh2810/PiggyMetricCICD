@@ -2,7 +2,7 @@
 Jenkins server (Controller & Agent) for PiggyMetric CICD
 
 ## Setup SSH key for Jenkins (Controller & Agent)
-*Jenkins Controller (ssh client - private key) --- Jenkins Agent (ssh server - public key)*
+`Jenkins Controller (ssh client - private key) --- Jenkins Agent (ssh server - public key)`
 
 - `mkdir .ssh` then `cd .ssh`
 - Generate ssh public/private key on your host`ssh-keygen -t ed25519 -f jenkins-agent`
@@ -13,8 +13,9 @@ Jenkins server (Controller & Agent) for PiggyMetric CICD
 ## Setup connections for Jenkins & Github 
 2 main flows between Jenkins & Github
 
-*Jenkins --send build status for commit (1)--> Github*
-*Github webhook --notify changes--> Jenkins --pull code (2)--> Github*
+`Jenkins --send build status for commit (1)--> Github`
+
+`Github webhook --notify changes--> Jenkins --pull code (2)--> Github`
 
 ### (1) Setup Github Access Token 
 - GITHUB - Create a Github access token & select relevant permissions
