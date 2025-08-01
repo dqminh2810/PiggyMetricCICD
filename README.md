@@ -29,6 +29,11 @@ Jenkins server (Controller & Agent) for PiggyMetric CICD
 ## Setup Jenkins Shared Library
 - JENKINS (**Controller**) - Check Global Trusted Pipeline Libraries with correct library alias & github project repository url
 
+**TODO**
+
+- Set up K8S & connect with Jenkins
+- Define K8S containers deployment steps
+
 ## ARCHITECTURE
 
 ![CICD_Architecture](https://github.com/dqminh2810/PiggyMetricCICD/blob/master/docs/PM-cicd.jpg)
