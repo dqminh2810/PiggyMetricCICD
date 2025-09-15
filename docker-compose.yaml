@@ -10,6 +10,10 @@ services:
             - 50000:50000
         volumes:
             - ./data:/var/jenkins_home
+            - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+            - DOCKER_HOST=unix:///var/run/docker.sock
+
     agent:
         build: jenkins-agent-1
         container_name: agent
@@ -18,6 +22,10 @@ services:
         ports:
             - 22:22
         volumes:
-            - type: bind
-              source: ./jenkins-agent-1/ssh/jenkins-agent.pub
-              target: /home/jenkins/.ssh/authorized_keys
+            - ./jenkins-agent-1/ssh/jenkins-agent.pub:/home/jenkins/.ssh/authorized_keys
+            - /var/run/docker.sock:/var/run/docker.sock
+#            - type: bind
+#              source: ./jenkins-agent-1/ssh/jenkins-agent.pub
+#              target: /home/jenkins/.ssh/authorized_keys
+        environment:
+            - DOCKER_HOST=unix:///var/run/docker.sock
