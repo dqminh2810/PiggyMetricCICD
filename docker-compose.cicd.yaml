@@ -6,7 +6,7 @@ services:
         privileged: true
         user: root
         ports:
-            - 9091:8080
+            - 9091:8080            
             - 50000:50000
         volumes:
             - ./data:/var/jenkins_home
@@ -15,17 +15,15 @@ services:
             - DOCKER_HOST=unix:///var/run/docker.sock
 
     agent:
-        build: jenkins-agent-1
+        build: jenkins-agent
         container_name: agent
         privileged: true
         user: root
         ports:
-            - 22:22
+            - 22:22         ## jenkins ssh port
+            - 9001:9100     ## prometheus-node-exporter port 
         volumes:
-            - ./jenkins-agent-1/ssh/jenkins-agent.pub:/home/jenkins/.ssh/authorized_keys
+            - ./jenkins-agent/ssh/jenkins-agent.pub:/home/jenkins/.ssh/authorized_keys
             - /var/run/docker.sock:/var/run/docker.sock
-#            - type: bind
-#              source: ./jenkins-agent-1/ssh/jenkins-agent.pub
-#              target: /home/jenkins/.ssh/authorized_keys
         environment:
             - DOCKER_HOST=unix:///var/run/docker.sock

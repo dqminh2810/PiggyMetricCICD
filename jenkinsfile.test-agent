@@ -1,0 +1,16 @@
+pipeline {
+    agent {label "jenkins-agent"}
+    stages {
+        stage('Check env') {
+            steps {
+                sh '''
+                    echo "Node name is $NODE_NAME"
+                    echo "Job name is $JOB_NAME"
+                    hostname -I
+                    java --version
+                    mvn --version
+                '''
+            }
+        }
+    }
+}

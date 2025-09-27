@@ -1,0 +1,48 @@
+pipeline {
+    agent {label "jenkins-agent"}
+
+    environment {
+        GITHUB_ORGANIZATION = "dqminh2810"
+        GITHUB_REPO = "PiggyMetric"
+        WORKSPACE = "${env.WORKSPACE}"
+        //KUBECONFIG_CREDENTIALS_ID = 'kubeconfig-creds'
+    }
+
+    stages {
+        stage('Check ENV') {
+            steps {
+                sh '''
+                    echo "-------ENV VARIABLES-------"
+                    echo "NODE_NAME is $NODE_NAME"
+                    echo "JOB_NAME is $JOB_NAME"
+                    echo "USER is $USER"
+                    echo "WORKSPACE is ${WORKSPACE}"
+                    echo "-------BUILD TOOLS-------"
+                    hostname -I
+                    java --version
+                '''
+            }
+        }
+
+        stage('Check K3S connection and interaction') {
+            agent {
+                kubernetes {
+                    cloud 'K3S'
+                    defaultContainer 'kubectl'
+                    yamlFile 'kubectl-pod.yaml'
+                }
+            }
+            stages {
+                stage('Checking version') {
+                    steps {
+                        container('kubectl') {
+                            sh '''
+                                kubectl --version
+                            '''
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
