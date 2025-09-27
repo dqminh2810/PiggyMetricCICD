@@ -6,7 +6,7 @@ Jenkins server (Controller & Agent) for PiggyMetric CICD
 
 - `mkdir .ssh` then `cd .ssh`
 - Generate ssh public/private key on your host`ssh-keygen -t ed25519 -f jenkins-agent`
-- Build & Launch `docker-compose up -d`
+- Build & Launch `docker-compose -f docker-compose.cicd.yaml up -d`
 - JENKINS (**Agent**) - ssh public key has been added to jenkins agent
 - JENKINS (**Controller**) - Create credentials with ssh private key & Setup agent node
 
