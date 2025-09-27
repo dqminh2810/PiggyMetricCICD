@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: jenkins-sa
+  namespace: jenkins-ns
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: jenkins-pod-manager
+  namespace: jenkins-ns
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/exec", "pods/log"]
+  verbs: ["create", "get", "list", "watch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jenkins-pod-manager-binding
+  namespace: jenkins-ns
+subjects:
+- kind: ServiceAccount
+  name: jenkins-sa
+  namespace: jenkins-ns
+roleRef:
+  kind: Role
+  name: jenkins-pod-manager
+  apiGroup: rbac.authorization.k8s.io

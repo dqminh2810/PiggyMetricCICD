@@ -14,10 +14,10 @@ scrape_configs:
     metrics_path: '/prometheus'
     scrape_interval: 5s
     static_configs:
-      - targets: ['192.168.197.224:9091']
+      - targets: ['<jenkins-controller-host-IP>:9091']
 
   - job_name: 'jenkins-agent-node'
     metrics_path: '/metrics'
     scrape_interval: 5s
     static_configs:
-      - targets: ['192.168.197.224:9001']
+      - targets: ['<jenkins-agent-host-IP>:9001']

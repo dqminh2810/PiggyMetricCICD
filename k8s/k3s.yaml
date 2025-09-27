@@ -1,0 +1,18 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: <certificate>
+    server: https://<k3s-master-address>:6443
+  name: jenkins-cluster
+contexts:
+- context:
+    cluster: jenkins-cluster
+    user: jenkins-sa
+  name: jenkins-context
+current-context: jenkins-context
+kind: Config
+preferences: {}
+users:
+- name: jenkins-sa
+  user:
+    token: <token>

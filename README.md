@@ -32,26 +32,29 @@ Jenkins server (Controller & Agent) for PiggyMetric CICD
 ## Setup connections for Jenkins & K3S
 - Install Kubernetes plugin
 - Create new cloud connection (type Kubernetes)
-- K8s URL = `Master-IP`:6443
-- Setup K3S server SSL certificate on Jenkins (1)
-- Create credential text for jwt token to K3s api server (2)
-- Change Jenkins connection (Master - Agent) type to WebSocket instead TCP port
+- Create SA for k3s (1)
+- Get kubeconfig file /etc/rancher/k3s/k3s.yaml and generate jwt token for connect to k3s api server (2)
+- Create credential by k3s file for connect to K3s api server
 
-*(1)*
-**K3S master** 
-- Get K3S server SSL certificate `cat /var/lib/rancher/k3s/server/tls/server-ca.crt`
-
-**Jenkins master**
-- Copy `server-ca.crt` -> `~/k3s-ca.cer`
-- Update in jenkins SSL trust repository
-
-`cd $JAVA_HOME/lib/security`
-
-`keytool -import -trustcacerts -file ~/k3s-ca.cer -alias k3s-ca -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit`
-
-*(2)*
 **K3S master**
-- Generate jwt token to k3s api server `kubectl create token default -n default`
+- *(1)* `kubectl apply -f k8s/jenkins-sa.yaml`
+- *(2)* `kubectl create token jenkins-sa --namespace=jenkins-ns --duration=24h`
+
+## Setup connections from K3s to Docker
+- Create k3s secret
+
+```
+kubectl create secret docker-registry docker-reg-creds-secret \
+      --docker-server=<your-registry-server> \
+      --docker-username=<your-username> \
+      --docker-password=<your-password> \
+      --docker-email=<your-email> \
+      --namespace=jenkins-ns 
+```
+
+- Read the contents of a K3S secret file
+
+`kubectl --namespace jenkins-ns get secret docker-reg-creds-secret -o jsonpath='{.data.\.dockerconfigjson}' | base64 --decode`
 
 ## ARCHITECTURE
 
