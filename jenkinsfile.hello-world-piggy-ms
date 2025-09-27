@@ -67,7 +67,7 @@ pipeline {
                 kubernetes {
                     cloud 'K3S'
                     defaultContainer 'kubectl'
-                    yamlFile 'kubectl-pod.yaml'
+                    yamlFile 'k8s/kubectl-pod.yaml'
                 }
             }
             stages {
@@ -76,7 +76,7 @@ pipeline {
                         container('kubectl') {
                             sh '''
                                 sed -e "s|__IMAGE_PLACEHOLDER__|${IMAGE_NAME_MS_CONFIG}:${IMAGE_TAG}|g" \
-                                ms-pod.tmpl.yaml > ms-pod.yaml
+                                k8s/ms-pod.tmpl.yaml > k8s/ms-pod.yaml
                                 kubectl --namespace jenkins-ns apply -f ms-pod.yaml
                             '''
                         }
