@@ -1,35 +1,57 @@
 # PiggyMetric CICD
-Jenkins server (Controller & Agent) for PiggyMetric CICD
+CICD for PiggyMetric microservices
 
-## Setup SSH key for Jenkins (Controller & Agent)
-`Jenkins Controller (ssh client - private key) --- Jenkins Agent (ssh server - public key)`
+## INFRASTRUCTURE
+### Jenkins cluster & Prometheus + Grafana (Local)
+**Jenkins**
 
-- `mkdir .ssh` then `cd .ssh`
-- Generate ssh public/private key on your host`ssh-keygen -t ed25519 -f jenkins-agent`
-- Build & Launch `docker-compose up -d`
-- JENKINS (**Agent**) - ssh public key has been added to jenkins agent
-- JENKINS (**Controller**) - Create credentials with ssh private key & Setup agent node
+`ssh-keygen -t ed25519 -f ./jenkins-agent/ssh/jenkins-agent`
 
-## Setup connections for Jenkins & Github 
+`docker-compose -f docker-compose.cicd.yaml`
+
+**Prometheus + Grafana**
+
+*Modify Jenkins controller + agent IP address prometheus/prometheus.yaml*
+
+`docker-compose -f docker-compose.metric.yaml`
+
+### K3S Cluster (AWS EC2)
+*Create IAM account then update ~/.aws/credentials profile*
+
+`cd terraform`
+
+`ssh-keygen -t ed25519 -f ./ssh/k3s-cluster-key`
+
+`terraform init`
+
+`terraform plan`
+
+`terraform apply --without-approve`
+
+`terraform destroy --without-approve`
+
+## SETUP CONNECTIONS
+
+### Jenkins & Github 
 2 main flows between Jenkins & Github
 
 `Jenkins --send build status for commit (1)--> Github`
 
 `Github webhook --notify changes--> Jenkins --pull code (2)--> Github`
 
-### (1) Setup Github Access Token 
+**(1) Setup Github Access Token**
 - GITHUB - Create a Github access token & select relevant permissions
 - JENKINS (**Controller**) - Create credentials & update github server config, then setup ngrok to expose jenkins &  update jenkins url
 
-### (2) Setup SSH key for Github & Jenkins
+**(2) Setup SSH key for Github & Jenkins**
 *Github (public key) --- Jenkins Agent (**private** key)*
 - GITHUB - Add ssh public key & Add Jenkins webhook url
 - JENKINS (*Agent*) - Init ssh agent then Add ssh private key 
 
-## Setup Jenkins Shared Library
+### Jenkins Shared Library
 - JENKINS (**Controller**) - Check Global Trusted Pipeline Libraries with correct library alias & github project repository url
 
-## Setup connections for Jenkins & K3S
+### Jenkins & K3S
 - Install Kubernetes plugin
 - Create new cloud connection (type Kubernetes)
 - Create SA for k3s (1)
@@ -40,7 +62,7 @@ Jenkins server (Controller & Agent) for PiggyMetric CICD
 - *(1)* `kubectl apply -f k8s/jenkins-sa.yaml`
 - *(2)* `kubectl create token jenkins-sa --namespace=jenkins-ns --duration=24h`
 
-## Setup connections from K3s to Docker
+### K3s & Docker
 - Create k3s secret
 
 ```
