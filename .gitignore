@@ -1,3 +1,3 @@
-data/*
-jenkins-agent/ssh/*
-grafana/*
+**/data/*
+**/ssh/**
+grafana/**
