@@ -78,4 +78,3 @@ resource "docker_container" "jenkins-agent" {
         "DOCKER_HOST=unix:///var/run/docker.sock"
     ]
 }
-
