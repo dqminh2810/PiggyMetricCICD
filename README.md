@@ -51,18 +51,21 @@ CICD for PiggyMetric microservices
 ### Jenkins Shared Library
 - JENKINS (**Controller**) - Check Global Trusted Pipeline Libraries with correct library alias & github project repository url
 
+### Jenkins & Docker repository
+- Create credential with docker repository username/password
+
 ### Jenkins & K3S
 - Install Kubernetes plugin
 - Create new cloud connection (type Kubernetes)
 - Create SA for k3s (1)
-- Get kubeconfig file /etc/rancher/k3s/k3s.yaml and generate jwt token for connect to k3s api server (2)
+- Get kubeconfig file /etc/rancher/k3s/k3s.yaml & generate jwt token for connect to k3s api server (2) `only if select HTTP type connection, if Websocket type connection bypass step`
 - Create credential by k3s file for connect to K3s api server
 
 **K3S master**
 - *(1)* `kubectl apply -f k8s/jenkins-sa.yaml`
 - *(2)* `kubectl create token jenkins-sa --namespace=jenkins-ns --duration=24h`
 
-### K3s & Docker
+### K3s & Docker repository
 - Create k3s secret
 
 ```

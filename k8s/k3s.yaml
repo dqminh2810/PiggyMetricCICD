@@ -15,4 +15,7 @@ preferences: {}
 users:
 - name: jenkins-sa
   user:
-    token: <token>
+    client-certificate-data: <client-certificate-data>
+    client-key-data: <client-key-data>
+  # user:
+  #   token: <token>
