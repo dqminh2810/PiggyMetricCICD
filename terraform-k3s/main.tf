@@ -24,6 +24,7 @@ resource "aws_key_pair" "k3s_key" {
 
 # Create a security group
 resource "aws_security_group" "k3s_sg" {
+# Allow external traffic for port 22 (ssh) & 6443 (kube-api-server)
   name_prefix = "k3s-sg-"
   ingress {
     from_port   = 22

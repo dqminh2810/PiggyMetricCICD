@@ -1,0 +1,23 @@
+scrape_configs:
+  # - job_name: 'hello-world-piggy-metrics'
+  #   metrics_path: '/actuator/prometheus'
+  #   scrape_interval: 5s
+  #   static_configs:
+  #     - targets: ['auth-service:9000', 'account-service:8081', 'notification-service:8082', 'statistic-service:8083', 'experience-service:8080', 'gateway:8000']
+  #   basic_auth:
+  #     username: 'user'
+  #     password: 'password'
+  
+  ## (jenkins-agent & node-jenkins-agent) & (ms & node-ms)
+
+  - job_name: 'jenkins-controller'
+    metrics_path: '/prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['<jenkins-controller-host-IP>:<jenkins-controller-port>']
+
+  - job_name: 'jenkins-agent-node'
+    metrics_path: '/metrics'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['<jenkins-agent-host-IP>:9001']
