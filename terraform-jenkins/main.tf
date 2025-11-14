@@ -66,11 +66,11 @@ resource "aws_security_group" "jenkins_sg" {
 resource "aws_instance" "jenkins_controller" {
   # ami           = "ami-01a45e82be7773160"
   # instance_type = "t4g.medium"
-  ami           = "ami-0883a1956e6e2539b"
+  ami           = "ami-0818ff4e4d072e0ec"
   instance_type = "t3.medium"
   key_name      = aws_key_pair.jenkins_key.key_name
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
-  user_data     = file("base-setup/install-jenkins-controller.sh")
+  # user_data     = file("base-setup/install-jenkins-controller.sh")
 
   tags = {
     Name = "jenkins-controller"
@@ -83,20 +83,53 @@ resource "aws_instance" "jenkins_agents" {
   count = var.agent_count
   # ami           = "ami-01a45e82be7773160"
   # instance_type = "t4g.small"
-  ami           = "ami-0883a1956e6e2539b"
+  ami           = "ami-0818ff4e4d072e0ec"
   instance_type = "t3.medium"
   key_name      = aws_key_pair.jenkins_key.key_name
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
-  user_data     = file("base-setup/install-jenkins-agent.sh")
+  # user_data     = file("base-setup/install-jenkins-agent.sh")
 
   tags = {
     Name = "jenkins-agent-${count.index + 1}"
   }
 }
 
-# # Use a null_resource to extract the password from the server
-resource "null_resource" "get_jenkins_controller_initial_password" {
+# setup jenkins controller
+resource "null_resource" "setup-jenkins-controller" {
   depends_on = [aws_instance.jenkins_controller]
+  provisioner "local-exec" {
+    command = <<-EOT
+      echo "Waiting 60 seconds for SSH service to start..."
+      sleep 60
+
+      export ANSIBLE_HOST_KEY_CHECKING=False
+      ansible-playbook -i "${aws_instance.jenkins_controller.public_ip}," ./ansible/playbook-jenkins-controller.yaml \
+        --user admin \
+        --private-key ${var.private_key_path}
+    EOT
+  }
+}
+
+# setup jenkins agents
+resource "null_resource" "setup-jenkins-agents" {
+  depends_on = [aws_instance.jenkins_agents]
+  provisioner "local-exec" {
+    command = <<-EOT
+      echo "Waiting 60 seconds for SSH service to start..."
+      sleep 60
+
+      export ANSIBLE_HOST_KEY_CHECKING=False
+      ANSIBLE_HOSTS="${join(",", aws_instance.jenkins_agents[*].public_ip)},"
+      ansible-playbook -i $ANSIBLE_HOSTS ./ansible/playbook-jenkins-agent.yaml \
+        --user admin \
+        --private-key ${var.private_key_path}
+    EOT
+  }
+}
+
+# extract the password from the jenkins controller
+resource "null_resource" "get_jenkins_controller_initial_password" {
+  depends_on = [null_resource.setup-jenkins-controller]
 
   provisioner "local-exec" {
     command = "sleep 60 && ssh -v -o StrictHostKeyChecking=no -i ${var.private_key_path} admin@${aws_instance.jenkins_controller.public_ip} 'sudo head -c -1 /home/admin/jenkins_home/secrets/initialAdminPassword' > tmp/jenkins_controller_initial_password"
