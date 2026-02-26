@@ -1,3 +1,4 @@
+.idea/**
 **/data/*
 **/ssh/**
 ./grafana/**
@@ -7,3 +8,5 @@
 **/terraform.tfstate
 **/**.tfstate.**
 **/.terraform.lock.hcl
+
+**/docker-compose-sonarqube/sonar_db_data/

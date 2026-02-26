@@ -30,6 +30,10 @@ CICD for PiggyMetric microservices
 
 `ssh-keygen -t ed25519 -f ./terraform-metric/ssh/metric-cluster-key`
 
+`ssh-keygen -t ed25519 -f ./terraform-nexus/ssh/nexus-server-key`
+
+`ssh-keygen -t ed25519 -f ./terraform-sonarqube/ssh/sonarqube-server-key`
+
 **Terraform**
 
 `terraform init`
