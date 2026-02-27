@@ -49,8 +49,12 @@ CICD for PiggyMetric microservices
 `ssh -i ./ssh/k3s-cluster-key.pem admin@<hostname-ec2>`
 
 ## SETUP CONNECTIONS - APPLICATION LEVEL
+
 ### JENKINS
+
 ##### Jenkins & Github 
+**Configuration**
+
 2 main flows between Jenkins & Github
 
 `Jenkins --send build status for commit (1)--> Github`
@@ -67,12 +71,44 @@ CICD for PiggyMetric microservices
 - JENKINS (*Agent*) - Init ssh agent then Add ssh private key 
 
 ##### Jenkins Shared Library
+**Configuration**
+
 - JENKINS (**Controller**) - Check Global Trusted Pipeline Libraries with correct library alias & github project repository url
 
+##### Jenkins & Sonarqube
+**Plugins**
+
+- SonarQube Scanner
+
+**Configuration**
+
+
+##### Jenkins & Nexus
+**Plugins**
+
+- Config File Provider (setting.xml editor)
+
+**Configuration**
+
+
 ##### Jenkins & Docker repository
-- Create credential with docker repository username/password
+**Plugins**
+
+- Docker 
+- Docker Pipeline
+
+**Configuration**
+
 
 ##### Jenkins & K3S
+**Plugins**
+
+- Kubernetes 
+- Kubernetes CLI 
+- Kubernetes Client API 
+- Kubernetes Credentials 
+
+**Configuration**
 - Install Kubernetes plugin
 - Create new cloud connection (type Kubernetes)
 - Create SA for k3s (1)
@@ -102,4 +138,11 @@ kubectl create secret docker-registry docker-reg-creds-secret \
 
 ## ARCHITECTURE DIAGRAM
 
-![CICD_Architecture](https://github.com/dqminh2810/PiggyMetricCICD/blob/master/docs/PM-cicd.jpg)
+**WORKFLOW**
+
+![CICD_Pipeline_Architecture](https://github.com/dqminh2810/PiggyMetricCICD/blob/master/docs/PM-cicd-pipeline.jpg)
+
+
+**INFRA**
+
+![CICD_Infra_Architecture](https://github.com/dqminh2810/PiggyMetricCICD/blob/master/docs/PM-cicd-infra.jpg)
