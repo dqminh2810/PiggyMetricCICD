@@ -52,7 +52,7 @@ CICD for PiggyMetric microservices
 
 ### JENKINS
 
-##### Jenkins & Github 
+#### Jenkins & Github 
 **Configuration**
 
 2 main flows between Jenkins & Github
@@ -70,12 +70,12 @@ CICD for PiggyMetric microservices
 - GITHUB - Add ssh public key & Add Jenkins webhook url
 - JENKINS (*Agent*) - Init ssh agent then Add ssh private key 
 
-##### Jenkins Shared Library
+#### Jenkins Shared Library
 **Configuration**
 
 - JENKINS (**Controller**) - Check Global Trusted Pipeline Libraries with correct library alias & github project repository url
 
-##### Jenkins & Sonarqube
+#### Jenkins & Sonarqube
 **Plugins**
 
 - SonarQube Scanner
@@ -83,7 +83,7 @@ CICD for PiggyMetric microservices
 **Configuration**
 
 
-##### Jenkins & Nexus
+#### Jenkins & Nexus
 **Plugins**
 
 - Config File Provider (setting.xml editor)
@@ -91,7 +91,7 @@ CICD for PiggyMetric microservices
 **Configuration**
 
 
-##### Jenkins & Docker repository
+#### Jenkins & Docker repository
 **Plugins**
 
 - Docker 
@@ -100,7 +100,7 @@ CICD for PiggyMetric microservices
 **Configuration**
 
 
-##### Jenkins & K3S
+#### Jenkins & K3S
 **Plugins**
 
 - Kubernetes 
@@ -140,7 +140,7 @@ kubectl create secret docker-registry docker-reg-creds-secret \
 
 **WORKFLOW**
 
-![CICD_Pipeline_Architecture](https://github.com/dqminh2810/PiggyMetricCICD/blob/master/docs/PM-cicd-pipeline.jpg)
+![CICD_Pipeline_Architecture](https://github.com/dqminh2810/PiggyMetricCICD/blob/master/docs/PM-cicd-pipeline.gif)
 
 
 **INFRA**
