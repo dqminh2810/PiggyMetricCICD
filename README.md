@@ -102,12 +102,6 @@ kubectl create secret docker-registry docker-reg-creds-secret \
 `kubectl --namespace jenkins-ns get secret docker-reg-creds-secret -o jsonpath='{.data.\.dockerconfigjson}' | base64 --decode`
 
 ## ARCHITECTURE DIAGRAM
-
-**WORKFLOW**
-
-![CICD_Pipeline_Architecture](https://github.com/dqminh2810/PiggyMetricCICD/blob/master/docs/PM-cicd-pipeline.gif)
-
-
-**INFRA**
+**ARCHITECTURE**
 
 ![CICD_Infra_Architecture](https://github.com/dqminh2810/PiggyMetricCICD/blob/master/docs/PM-cicd-infra.jpg)
