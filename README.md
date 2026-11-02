@@ -1,7 +1,7 @@
-# PiggyMetric CICD
+# PIGGYMETRIC CICD
 CICD for PiggyMetric microservices
 
-## INFRASTRUCTURE - SYSTEM LEVEL
+## SETUP
 ### On-premise
 **Jenkins**
 
@@ -48,12 +48,12 @@ CICD for PiggyMetric microservices
 
 `ssh -i ./ssh/k3s-cluster-key.pem admin@<hostname-ec2>`
 
-## SETUP CONNECTIONS - APPLICATION LEVEL
+## COMPONENTS CONFIGURATION
 
 ### JENKINS
 
 #### Jenkins & Github 
-**Configuration**
+***Configuration***
 
 2 main flows between Jenkins & Github
 
@@ -80,25 +80,16 @@ CICD for PiggyMetric microservices
 
 - SonarQube Scanner
 
-**Configuration**
-
-
 #### Jenkins & Nexus
 **Plugins**
 
 - Config File Provider (setting.xml editor)
-
-**Configuration**
-
 
 #### Jenkins & Docker repository
 **Plugins**
 
 - Docker 
 - Docker Pipeline
-
-**Configuration**
-
 
 #### Jenkins & K3S
 **Plugins**
