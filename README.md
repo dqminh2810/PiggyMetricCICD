@@ -20,33 +20,7 @@ CICD for PiggyMetric microservices
 `https://github.com/dqminh2810/explorement-k3s`
 
 ### TERRAFORM - AWS EC2
-*Create IAM account then update ~/.aws/credentials profile*
-
-**Generate SSH key to connect aws ec2**
-
-`ssh-keygen -t ed25519 -f ./terraform-k3s/ssh/k3s-cluster-key`
-
-`ssh-keygen -t ed25519 -f ./terraform-jenkins/ssh/jenkins-cluster-key`
-
-`ssh-keygen -t ed25519 -f ./terraform-metric/ssh/metric-cluster-key`
-
-`ssh-keygen -t ed25519 -f ./terraform-nexus/ssh/nexus-server-key`
-
-`ssh-keygen -t ed25519 -f ./terraform-sonarqube/ssh/sonarqube-server-key`
-
-**Terraform**
-
-`terraform init`
-
-`terraform plan`
-
-`terraform apply -auto-approve`
-
-`terraform destroy -auto-approve`
-
-**Connect to ec2**
-
-`ssh -i ./ssh/k3s-cluster-key.pem admin@<hostname-ec2>`
+`TODO`
 
 ## COMPONENTS CONFIGURATION
 
