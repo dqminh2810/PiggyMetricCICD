@@ -2,7 +2,7 @@
 CICD for PiggyMetric microservices
 
 ## SETUP
-### On-premise
+### DOCKER
 **Jenkins**
 
 `ssh-keygen -t ed25519 -f ./docker-compose-cicd/jenkins-agent/ssh/jenkins-agent`
@@ -19,7 +19,7 @@ CICD for PiggyMetric microservices
 
 `https://github.com/dqminh2810/explorement-k3s`
 
-### Terraform - AWS EC2
+### TERRAFORM - AWS EC2
 *Create IAM account then update ~/.aws/credentials profile*
 
 **Generate SSH key to connect aws ec2**
