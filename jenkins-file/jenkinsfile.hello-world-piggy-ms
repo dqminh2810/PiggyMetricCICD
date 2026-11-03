@@ -1,7 +1,5 @@
-//@Library('test-job-agent-2-libs') _
-
 pipeline {
-    //agent { label 'built-in' }
+    // static agent on VPC
     agent {label "jenkins-agent"}
 
     environment {
@@ -64,6 +62,7 @@ pipeline {
 
         stage('K3S Deploy and Test') {
             agent {
+                // jenkins agent container & kubectl container
                 kubernetes {
                     cloud 'K3S'
                     defaultContainer 'kubectl'
